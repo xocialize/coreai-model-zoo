@@ -19,7 +19,7 @@ prefix [1,115,1280] → prefill + greedy decode → detokenize → markdown`.
 ```sh
 cd apps/CoreAIOCR
 xcodegen generate          # needs xcodegen
-open CoreAIOCR.xcodeproj    # Xcode-beta (macOS 27 SDK); set DEVELOPMENT_TEAM, build & run
+open CoreAIOCR.xcodeproj    # Xcode 27 (macOS 27 SDK); set DEVELOPMENT_TEAM, build & run
 ```
 
 ## Assets — stage into `~/Library/Application Support/CoreAIOCR/`

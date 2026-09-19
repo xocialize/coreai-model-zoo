@@ -4,7 +4,7 @@
 // the engine: load a stateful .aimodel, prefill the prompt ids, greedy-decode N tokens, print ids.
 // Verify the first generated id against the conversion oracle (e.g. _smoke/qwen3_5_ref.pt decode_token).
 //
-//   export DEVELOPER_DIR=/path/to/Xcode-beta.app/Contents/Developer
+//   (release Xcode 27 (macOS 27 SDK) is the active toolchain — no DEVELOPER_DIR override needed (AB-A-0077, 2026-09-17))
 //   swift run coreai-run --model <bundle.aimodel> --vocab 151936 --prompt "2,1037,4521,9,108,2516,65190,17" --max 5
 //
 // (Get vocab/prompt-ids from the conversion oracle. Tokenizer-driven text I/O lives in the iOS app.)

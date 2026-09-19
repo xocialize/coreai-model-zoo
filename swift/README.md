@@ -41,7 +41,7 @@ git -C coreai-models apply apps/coreai-shared-product.patch \
                            apps/coreai-pipelined-per-token-inputs.patch \
                            apps/coreai-pipelined-static-inputs.patch
 cd swift
-export DEVELOPER_DIR=/path/to/Xcode-beta.app/Contents/Developer
+# release Xcode 27 (macOS 27 SDK) is the active toolchain — no DEVELOPER_DIR override needed (AB-A-0077, 2026-09-17)
 swift build -c release --product zoo-fm-gate
 ```
 

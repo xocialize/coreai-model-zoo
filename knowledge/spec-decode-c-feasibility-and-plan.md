@@ -96,10 +96,10 @@ dense AOT bundle, wired into PipelinedBench as `PB_SPEC=1`. Lossless-verified on
 - Verify bundle: `coreai-models/exports/qwen3_4b_gpu/` (stateful dense AOT, already sideloaded to
   the A19 at `Documents/models/qwen3_4b_gpu`).
 
-**Reproduce (device = iPhone 17 Pro A6F3E849, Xcode-beta):**
+**Reproduce (device = iPhone 17 Pro A6F3E849, Xcode 27):**
 ```
 # build
-cd ondevice/PipelinedBench && DEVELOPER_DIR=~/Downloads/Xcode-beta.app/Contents/Developer \
+cd ondevice/PipelinedBench && \
   xcodegen generate && xcodebuild -project PipelinedBench.xcodeproj -scheme PipelinedBench \
   -configuration Release -destination 'generic/platform=iOS' -derivedDataPath .build_xcode \
   -allowProvisioningUpdates build

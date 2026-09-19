@@ -9,7 +9,7 @@
 #   2. The App Store Connect API key (same one used for the iOS upload) — notarytool uses it.
 #
 # Usage:
-#   export DEVELOPER_DIR=/Users/$USER/Downloads/Xcode-beta.app/Contents/Developer
+#   (DEVELOPER_DIR: release Xcode 27 (macOS 27 SDK) is the active toolchain — no DEVELOPER_DIR override needed (AB-A-0077, 2026-09-17); export it only to build with a different Xcode)
 #   export ASC_KEY_P8=/Users/$USER/Downloads/AuthKey_3ZR8BRVF9H.p8
 #   export ASC_KEY_ID=3ZR8BRVF9H
 #   export ASC_ISSUER_ID=69a6de96-8f3e-47e3-e053-5b8c7c11a4d1

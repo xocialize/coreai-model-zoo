@@ -1,5 +1,5 @@
 // CoreAIOCRApp.swift — minimal macOS app: pick a document image -> on-device OCR markdown.
-// Self-contained shell around OCRPipeline. Build with xcodegen (project.yml) + Xcode-beta,
+// Self-contained shell around OCRPipeline. Build with xcodegen (project.yml) + Xcode 27 (macOS 27 SDK),
 // run on device (the harness can't build macOS apps). Place the assets in `assetsDir`
 // (out/_swift_assets/* + the two .aimodel bundles + a tokenizer/ dir).
 

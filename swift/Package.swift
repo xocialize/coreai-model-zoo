@@ -8,7 +8,7 @@
 //   `CoreAILM`): clone it AT THIS REPO'S ROOT and apply the patch stack, exactly like
 //   `apps/` (see apps/README.md step 1). Verified on macOS 27 beta + Xcode 27 beta.
 //
-// export DEVELOPER_DIR=/path/to/Xcode-beta.app/Contents/Developer; swift build -c release
+// swift build -c release      (release Xcode 27 (macOS 27 SDK) is the active toolchain — no DEVELOPER_DIR override needed (AB-A-0077, 2026-09-17))
 import PackageDescription
 
 let package = Package(

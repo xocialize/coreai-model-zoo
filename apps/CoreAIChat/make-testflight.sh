@@ -16,7 +16,7 @@
 #   export ASC_KEY_P8=/path/to/AuthKey_XXXXXXXXXX.p8
 #   export ASC_KEY_ID=XXXXXXXXXX
 #   export ASC_ISSUER_ID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-#   export DEVELOPER_DIR=/Users/$USER/Downloads/Xcode-beta.app/Contents/Developer
+#   (DEVELOPER_DIR: release Xcode 27 (macOS 27 SDK) is the active toolchain — no DEVELOPER_DIR override needed (AB-A-0077, 2026-09-17); export it only to build with a different Xcode)
 #   ./make-testflight.sh
 set -euo pipefail
 

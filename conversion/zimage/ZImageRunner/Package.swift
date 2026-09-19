@@ -5,7 +5,7 @@ import PackageDescription
 // uses, driven from a CLI so the Swift host loop can be gated against the Python
 // reference engine (conversion/zimage/pipeline_engine.py) without touching a GUI.
 //
-//   DEVELOPER_DIR=~/Downloads/Xcode-beta.app/Contents/Developer \
+//   (release Xcode 27 (macOS 27 SDK) is the active toolchain — no DEVELOPER_DIR override needed (AB-A-0077, 2026-09-17))
 //   swift run -c release ZImageRunner --bundle <bundle-dir> --side 512 \
 //       --prompt "a red apple on a wooden table, studio lighting" --out /tmp/z.png
 let package = Package(

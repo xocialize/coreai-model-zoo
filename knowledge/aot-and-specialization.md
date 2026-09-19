@@ -66,7 +66,7 @@ AOT bundle is the only on-device path. (Source: `project_fastcontext_4b_coreai` 
 - **Output artifact + underlying binary = `aimodelc` / `.aimodelc`.** The compiled bundle is
   `modelName.architectureName.aimodelc` (`ModelBundle.swift:103`); the runner accepts `.aimodel` or
   `.aimodelc` (`LLMRunnerMain.swift:719-722`); and `aimodelc` exists as a binary in Xcode's toolchain
-  (`Xcode-beta.app/.../usr/bin/aimodelc`).
+  (`Xcode.app/.../usr/bin/aimodelc`).
 - So both names are real: **`coreai-build` = the verb, `aimodelc` = the compiler binary / compiled extension.**
 
 ### Flags (full surface, from `xcrun coreai-build compile --help`, verified 2026-06-10)

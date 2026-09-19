@@ -22,7 +22,7 @@ Gate (both are prefill+greedy vs the liquid_audio oracle `asr_ref.npz`, 14 token
 This module is a LIBRARY (helpers only). Milestone-A Mac-GPU gate workflow (the plain
 .aimodel JIT-thrashes the ANE compiler on Mac GPU, so gate through AOT):
   1. export:  coreai-models/.venv/bin/python export_worker.py fp16 artifacts/<name>
-  2. AOT:     DEVELOPER_DIR=~/Downloads/Xcode-beta.app/Contents/Developer xcrun coreai-build compile \
+  2. AOT:     xcrun coreai-build compile \
                 artifacts/<name>/<name>.aimodel --output artifacts/aot \
                 --platform macOS --preferred-compute gpu --expect-frequent-reshapes --architecture h16c
   3. gate:    coreai-models/.venv/bin/python aot_gate.py artifacts/aot/<name>.h16c.aimodelc

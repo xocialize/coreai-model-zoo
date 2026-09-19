@@ -190,7 +190,7 @@ git -C coreai-models apply ../apps/coreai-shared-product.patch \
 #      QwenChatFast: https://huggingface.co/Qwen/Qwen3.5-0.8B
 
 # 3. Generate + build (set DEVELOPMENT_TEAM in project.yml, or pick a team in Xcode > Signing):
-export DEVELOPER_DIR=/path/to/Xcode-beta.app/Contents/Developer
+# release Xcode 27 (macOS 27 SDK) is the active toolchain — no DEVELOPER_DIR override needed (AB-A-0077, 2026-09-17)
 cd apps/CoreAIChat            # or apps/QwenChatFast
 xcodegen generate
 xcodebuild -project CoreAIChat.xcodeproj -scheme CoreAIChat -configuration Release \
