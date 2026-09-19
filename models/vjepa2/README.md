@@ -86,6 +86,29 @@ maps to `ShrinkDims` and fails — patched out, math unchanged (see
 [`conversion/vjepa2/export_fp16.py`](../../conversion/vjepa2/export_fp16.py) and
 [`knowledge/video-world-models-vjepa2.md`](../../knowledge/video-world-models-vjepa2.md)).
 
+## Two-output variant (`vjepa2-vitl-ssv2-embed`) — unpublished, local
+
+`logits [1,174]` **+ `embedding [1,1024]`** (the pooled router vector), for consumers that want the
+representation rather than the SSv2 vocabulary. Built for ForgeOptimizerKit's §6.3 planner-hint
+seam, which discards the labels entirely and fits a logistic probe over the embedding.
+
+```bash
+python3 conversion/zoo_convert.py --python <coreai-models-venv>/bin/python run vjepa2-vitl-ssv2-embed
+```
+
+Gated 2026-08-16 (Apple M5 Max): logits cos **0.999964** (top-1 match), embedding cos **0.999940**,
+recomposition bit-exact. 708 MB (675 MiB) fp16 — the same size as the single-output bundle, since the
+extra output adds no weights; load 0.16 s, **44 ms** warm forward.
+
+Stored **private** at `xocialize/VJEPA2-ViTL-SSv2-Embed-CoreAI` (bundle + `export_fp16_embed.py` +
+oracle fixtures). The *public* zoo bundle remains the single-output one above.
+Recipe + prerequisites: `recipe.toml`.
+
+Embedding sanity on six signage clips: pairwise cosine spans **0.146 → 0.987**, and the two
+highest-similarity clips are the same content at two encodes (`_1080p` vs `_master`, cos 0.987) —
+content-identical inputs collapse together, different content separates. That is the property a
+router feature needs, and it is a semantic gate the numeric one does not provide.
+
 ## Run
 
 Live camera → rolling 16-frame clip → label: the kit's

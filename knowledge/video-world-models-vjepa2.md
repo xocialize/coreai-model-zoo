@@ -32,6 +32,20 @@ transformers ≥4.53 has the model class built in — no custom code.
   `HF_HUB_OFFLINE=1` fixes that but has a transformers bug (`checkpoint_files[0]=None`) when the
   snapshot is missing files — so **first finish the blob download with `hf_hub_download`** (it
   resumes `.incomplete` blobs), then run offline.
+- **A numeric gate cannot see a dead subgraph — only reading the reference can.** (2026-08-16, from
+  the two-output variant.) `VJEPA2ForVideoClassification.forward` calls its backbone with
+  `skip_predictor=True`; `VJEPA2Model` defaults that to **False**, in which case it runs the entire
+  JEPA *predictor* — a second transformer stack — and files the result under a separate output
+  field. `last_hidden_state` is `sequence_output` either way, so a wrapper that omits the flag
+  produces **identical numbers**: the oracle cosine passes, top-1 matches, every gate goes green,
+  and the bundle silently carries a stack nothing reads. Generic rule: **parity gates certify
+  values, never graph extent.** When wrapping a reference's internals rather than its public
+  forward, diff your call against the reference's own call site, argument by argument.
+- **Reaching an internal tensor is a resolve-then-prove job, not a lookup.** The single-output
+  export wraps the model and takes `.logits`, so it never needs the layout. Exposing `pooled` does.
+  Resolve the submodules by candidate name, then assert `classifier(pooler(backbone(x)))` reproduces
+  the model's own `.logits` — if the names drift, that fails loudly at author time instead of
+  shipping a bundle whose "embedding" is some other tensor. Measured bit-exact (max|Δ| = 0).
 - Preprocessing lives on the HOST: 16 frames uniform-sampled, 256×256, RGB 0..1, ImageNet mean/std.
   (The model does NOT normalize internally.)
 - **Perf (M4 Max GPU): ~150–180 ms per 16-frame clip, load 0.15 s** — real-time-ish video

@@ -12,3 +12,24 @@ bundle = "macos"
 status = "verified"
 aot = "xcrun coreai-build compile vjepa2_ssv2_fp16.aimodel --output ios/ --platform iOS --architecture h18p --preferred-compute gpu --min-deployment-version 27.0"
 notes = ["Fixed output name (vjepa2_ssv2_fp16.aimodel); the script takes no configuration flags."]
+
+# Two-output variant: logits + the pooled [1,1024] router embedding. Exists for
+# ForgeOptimizerKit's §6.3 planner-hint seam, which discards the SSv2 labels entirely and fits a
+# logistic probe over the embedding (mlxengine-forge/Docs/VJEPA2-HINT-ADAPTER.md).
+["vjepa2-vitl-ssv2-embed"]
+script = "vjepa2/export_fp16_embed.py"
+args = []
+card = "README.md"
+source_hf_id = "facebook/vjepa2-vitl-fpc16-256-ssv2"
+bundle = "macos"
+status = "verified"
+needs = [
+    "conversion/vjepa2/oracle_input.npy + oracle_logits.npy — run `vjepa2/reference_run.py` first. The export sets HF_HUB_OFFLINE=1 and cannot fetch them itself; the reference run also warms the ~1.4 GB checkpoint cache that offline mode then depends on.",
+    "An explicit interpreter. The sibling-.venv probe looks for ../../coreai-models/.venv, but the checkout here is coreai-models-main, so resolution falls through to /usr/bin/python3 (3.9 — no torch, and zoo_convert's own tomllib import needs 3.11+). Pass --python /Volumes/Satechi/Development/coreai-models-main/.venv/bin/python or set $ZOO_CONVERT_PYTHON; create that venv with `uv sync` in coreai-models-main if absent.",
+]
+notes = [
+    "No `hf_repo` on purpose — that field drives the zoo's PUBLIC publish, and the zoo's public bundle stays the single-output `vjepa2-vitl-ssv2`. This variant is stored privately at xocialize/VJEPA2-ViTL-SSv2-Embed-CoreAI (bundle + export script + oracle fixtures) and consumed by Tools/hintcal in mlxengine-forge.",
+    "Writes to artifacts/vjepa2_ssv2_fp16_embed/ — a separate directory, so a failed run here cannot clobber the verified single-output bundle.",
+    "`skip_predictor=True` is passed explicitly. Omitting it changes NO number (last_hidden_state is sequence_output either way), so the numeric gate still passes — it just traces the entire JEPA predictor stack into the graph as dead weight. Detected via inspect.signature; see the class docstring.",
+    "Gated 2026-08-16 on Apple M5 Max / 128 GB: recomposition bit-exact (cos 1.0000000, max|Δ| 0), logits cos 0.999964 with top-1 match, embedding cos 0.999940 (relL2 1.1e-02, fp16 noise). 708 MB (675 MiB); load 0.16 s, warm forward 44 ms. The port notes' 150–180 ms is M4 Max — different silicon, not a variant speedup.",
+]
